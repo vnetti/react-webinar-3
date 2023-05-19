@@ -1,0 +1,8 @@
+.CartInformation {
+    padding: 0 26px;
+}
+
+.CartInformation span {
+    padding-left: 15px;
+    font-weight: 700;
+}

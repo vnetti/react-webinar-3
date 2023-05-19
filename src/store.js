@@ -1,4 +1,4 @@
-import {generateCode} from "./utils";
+import item from "./components/item";
 
 /**
  * Хранилище состояния приложения
@@ -41,48 +41,42 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
-   */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
-  };
-
-  /**
-   * Удаление записи по коду
+   * Добавление товара в корзину
    * @param code
    */
-  deleteItem(code) {
-    this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
+  addItemToCart(code) {
+    const itemIndex = this.state.list.findIndex(item => item.code === code)
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
+    if (this.state.cart.findIndex(item => item.code === code) >= 0) {
+      this.setState({
+        ...this.state,
+        cart: this.state.cart.map(item => {
+          if (item.code === code) {
+            item.count ++
+            return item
+          }
+          return item
+        })
       })
-    })
+    } else {
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, {code: code, title: this.state.list[itemIndex].title, count: 1, price: this.state.list[itemIndex].price}]
+      })
+    }
   }
+
+  /**
+   * Удаление товара из корзины по коду
+   * @param code
+   */
+  deleteItemFromCart(code) {
+    this.setState({
+      ...this.state,
+      // Новый список, в котором не будет удаляемой позиции
+      cart: this.state.cart.filter(item => item.code !== code)
+    })
+  };
 }
 
 export default Store;

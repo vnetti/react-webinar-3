@@ -1,0 +1,13 @@
+.Cart {
+  max-width: 1000px;
+  width: 100%;
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  padding-bottom: 70px;
+}
+
+.Cart-button {
+  align-self: center;
+  margin-left: auto;
+}

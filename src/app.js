@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import List from "./components/list";
-import Controls from "./components/controls";
+import Information from "./components/information";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 
@@ -11,29 +11,33 @@ import PageLayout from "./components/page-layout";
  */
 function App({store}) {
 
-  const list = store.getState().list;
+  const data = {
+    list: store.getState().list,
+    cart: store.getState().cart,
+    totalPriceCart() {
+      return this.cart.reduce((acc, item) => acc + (item.price * item.count), 0)
+    }
+  }
 
   const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
-    }, [store]),
-
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
-    }, [store]),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store])
+    onAddItemToCart: useCallback((code) => {
+        store.addItemToCart(code)
+      },
+      [store]),
+    onDeleteItemFormCart: useCallback((code) => {
+        store.deleteItemFromCart(code)
+      },
+      [store])
   }
 
   return (
     <PageLayout>
-      <Head title='Приложение на чистом JS'/>
-      <Controls onAdd={callbacks.onAddItem}/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
+      <Head title='Магазин'/>
+      <Information cart={data.cart}
+                totalPriceCart={data.totalPriceCart()}
+                onDeleteItemFromCart={callbacks.onDeleteItemFormCart}/>
+      <List list={data.list}
+            onclickItem={callbacks.onAddItemToCart}/>
     </PageLayout>
   );
 }

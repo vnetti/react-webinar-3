@@ -49,3 +49,19 @@ export const generateCode1 = (function (start = 0) {
 export function generateCode2() {
   return generateCode2.value ? ++generateCode2.value : generateCode2.value = 1;
 }
+
+/**
+ * Форматирование числа в валюту
+ * @param value {Number} Число, которое будем форматировать
+ * @param currency {String} Валюта, используемая при форматировании валют. Возможными значениями являются коды валют ISO 4217, например, "USD" для доллара США, "EUR" для евро или "CNY" для китайского юаня
+ * @param locale {String} Локаль (код языка)
+ * @param minimumFractionDigits {Number} Минимальное используемое количество цифр дробной части числа (количество знаков после запятой)
+ * @returns {string}
+ */
+export function formatToCurrency(value, currency = 'RUB', locale = 'ru-RU', minimumFractionDigits = 0) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: minimumFractionDigits
+  }).format(value)
+}

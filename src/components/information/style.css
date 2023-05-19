@@ -1,0 +1,10 @@
+.Information {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.Cart .Information .CartInformation,
+.Cart .Information button {
+  display: none;
+}
