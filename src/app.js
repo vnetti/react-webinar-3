@@ -1,8 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import List from "./components/list";
 import Information from "./components/information";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import Cart from "./components/cart";
 
 /**
  * Приложение
@@ -10,6 +11,8 @@ import PageLayout from "./components/page-layout";
  * @returns {React.ReactElement}
  */
 function App({store}) {
+
+  const [isOpenedCart, setIsOpenedCart] = useState(false)
 
   const data = {
     list: store.getState().list,
@@ -27,17 +30,28 @@ function App({store}) {
     onDeleteItemFormCart: useCallback((code) => {
         store.deleteItemFromCart(code)
       },
-      [store])
+      [store]),
+    onCloseCart() {
+      setIsOpenedCart(false)
+    },
+    onOpenCart() {
+      setIsOpenedCart(true)
+    }
   }
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
       <Information cart={data.cart}
-                totalPriceCart={data.totalPriceCart()}
-                onDeleteItemFromCart={callbacks.onDeleteItemFormCart}/>
+                   totalPriceCart={data.totalPriceCart()}
+                   onOpenCart={callbacks.onOpenCart}/>
       <List list={data.list}
             onclickItem={callbacks.onAddItemToCart}/>
+      <Cart cart={data.cart}
+            isOpened={isOpenedCart}
+            onClose={callbacks.onCloseCart}
+            totalPrice={data.totalPriceCart()}
+            onDeleteItemFromCart={callbacks.onDeleteItemFromCart}/>
     </PageLayout>
   );
 }

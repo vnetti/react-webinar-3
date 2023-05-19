@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
 import {cn as bem} from '@bem-react/classname';
-import Portal from "../portal";
 
 function Popup({children, isOpened, onClose}){
 
@@ -11,12 +10,10 @@ function Popup({children, isOpened, onClose}){
   if (!isOpened) return null
 
   return (
-    <Portal>
-      <div className={cn()}>
-        <div className={cn('overlay')} onClick={onClose}/>
-        <div className={cn('content')}>{children}</div>
-      </div>
-    </Portal>
+    <div className={cn()}>
+      <div className={cn('overlay')} onClick={onClose}/>
+      <div className={cn('content')}>{children}</div>
+    </div>
   )
 }
 

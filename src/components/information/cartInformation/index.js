@@ -8,7 +8,7 @@ function CartInformation({cart, totalPrice}){
 
   const cn = bem('CartInformation')
 
-  const count = cart.reduce((acc, item) => acc + item.count, 0)
+  const count = cart.length
 
   return (
       <div className={cn()}>
