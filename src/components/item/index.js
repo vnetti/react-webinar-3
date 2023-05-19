@@ -9,8 +9,8 @@ function Item(props){
   const cn = bem('Item');
 
   const callbacks = {
-    onClick: () => {
-      props.onClick(props.item.code)
+    onAddItemToCart: () => {
+      props.onAddItemToCart(props.item.code)
     }
   }
 
@@ -23,10 +23,9 @@ function Item(props){
       <div className={cn('price')}>
         {formatToCurrency(props.item.price)}
       </div>
-      {props.item.count && <div className={cn('price ') + cn('count')}>{props.item.count} шт</div>}
       <div className={cn('actions')}>
-        <button onClick={callbacks.onClick}>
-          {props.item.count ? 'Удалить' : 'Добавить'}
+        <button onClick={callbacks.onAddItemToCart}>
+          Добавить
         </button>
       </div>
     </div>
@@ -40,11 +39,11 @@ Item.propTypes = {
     price: PropTypes.number,
     count: PropTypes.number
   }).isRequired,
-  onClick: PropTypes.func
+  onAddItemToCart: PropTypes.func
 };
 
 Item.defaultProps = {
-  onClick: () => {},
+  onAddItemToCart: () => {},
 }
 
 export default React.memo(Item);

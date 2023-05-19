@@ -7,6 +7,7 @@ import Head from "../head";
 import Information from "../information";
 import List from "../list";
 import CartFooter from "./cartFooter";
+import CartItem from "./cartItem";
 
 function Cart(props){
 
@@ -19,7 +20,9 @@ function Cart(props){
       <div className={cn()}>
         <Head title={title}/>
         <Information/>
-        <List list={props.cart} onclickItem={props.onDeleteItemFromCart}/>
+        <List list={props.cart} onDeleteItem={props.onDeleteItemFromCart}>
+          <CartItem/>
+        </List>
         <CartFooter isEmpty={props.cart.length > 0} totalPrice={props.totalPrice}/>
       </div>
     </Popup>

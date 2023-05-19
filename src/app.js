@@ -4,6 +4,7 @@ import Information from "./components/information";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Cart from "./components/cart";
+import Item from "./components/item";
 
 /**
  * Приложение
@@ -27,7 +28,7 @@ function App({store}) {
         store.addItemToCart(code)
       },
       [store]),
-    onDeleteItemFormCart: useCallback((code) => {
+    onDeleteItemFromCart: useCallback((code) => {
         store.deleteItemFromCart(code)
       },
       [store]),
@@ -46,7 +47,9 @@ function App({store}) {
                    totalPriceCart={data.totalPriceCart()}
                    onOpenCart={callbacks.onOpenCart}/>
       <List list={data.list}
-            onclickItem={callbacks.onAddItemToCart}/>
+            onAddItemToCart={callbacks.onAddItemToCart}>
+        <Item/>
+      </List>
       <Cart cart={data.cart}
             isOpened={isOpenedCart}
             onClose={callbacks.onCloseCart}

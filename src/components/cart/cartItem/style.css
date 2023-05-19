@@ -1,0 +1,30 @@
+.CartItem {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.CartItem-code {
+  padding: 20px 10px 20px 20px;
+}
+
+.CartItem-title {
+  width: 100%;
+  padding: 20px 10px;
+}
+
+.CartItem-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 20px 10px;
+}
+
+.CartItem-info {
+  min-width: fit-content;
+  padding: 20px 14px;
+  font-size: 18px;
+  color: #404040;
+}
+
+.CartItem-info span:last-child {
+  margin-left: 42px;
+}
