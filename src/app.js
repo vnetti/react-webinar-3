@@ -5,6 +5,7 @@ import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Cart from "./components/cart";
 import Item from "./components/item";
+import Popup from "./components/popup";
 
 /**
  * Приложение
@@ -17,44 +18,45 @@ function App({store}) {
 
   const data = {
     list: store.getState().list,
-    cart: store.getState().cart,
-    totalPriceCart() {
-      return this.cart.reduce((acc, item) => acc + (item.price * item.count), 0)
-    }
+    cart: store.getState().cart.items,
+    totalPriceCart: store.getState().cart.totalPrice || 0,
+    countCartItems: store.getState().cart.itemsCount || 0,
   }
 
   const callbacks = {
     onAddItemToCart: useCallback((code) => {
         store.addItemToCart(code)
-      },
-      [store]),
+      },[store]),
+
     onDeleteItemFromCart: useCallback((code) => {
         store.deleteItemFromCart(code)
-      },
-      [store]),
-    onCloseCart() {
+      },[store]),
+
+    onCloseCart: useCallback(() => {
       setIsOpenedCart(false)
-    },
-    onOpenCart() {
+    }, []),
+
+    onOpenCart: useCallback(() => {
       setIsOpenedCart(true)
-    }
+    }, [])
   }
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <Information cart={data.cart}
-                   totalPriceCart={data.totalPriceCart()}
+      <Information countCartItems={data.countCartItems}
+                   totalPriceCart={data.totalPriceCart}
                    onOpenCart={callbacks.onOpenCart}/>
       <List list={data.list}
             onAddItemToCart={callbacks.onAddItemToCart}>
         <Item/>
       </List>
-      <Cart cart={data.cart}
-            isOpened={isOpenedCart}
-            onClose={callbacks.onCloseCart}
-            totalPrice={data.totalPriceCart()}
-            onDeleteItemFromCart={callbacks.onDeleteItemFromCart}/>
+      <Popup isOpened={isOpenedCart} onClose={callbacks.onCloseCart}>
+        <Cart cart={data.cart}
+              totalPrice={data.totalPriceCart}
+              onDeleteItemFromCart={callbacks.onDeleteItemFromCart}
+              isEmptyCart={!data.countCartItems > 0}/>
+      </Popup>
     </PageLayout>
   );
 }

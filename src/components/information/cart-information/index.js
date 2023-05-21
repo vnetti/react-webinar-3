@@ -4,17 +4,15 @@ import './style.css';
 import {cn as bem} from '@bem-react/classname';
 import {formatToCurrency, plural} from "../../../utils";
 
-function CartInformation({cart, totalPrice}){
+function CartInformation({count, totalPrice}){
 
   const cn = bem('CartInformation')
-
-  const count = cart.length
 
   return (
       <div className={cn()}>
         В корзине:
         <span>
-          {cart.length > 0 ?
+          {count > 0 ?
             `${count} ${plural(count, {one: 'товар', few: 'товара', many: 'товаров'}, 'ru-RU')} / ${formatToCurrency(totalPrice)}` :
             'пусто'}
         </span>
@@ -23,16 +21,8 @@ function CartInformation({cart, totalPrice}){
 }
 
 CartInformation.propTypes = {
-  cart: PropTypes.arrayOf(PropTypes.shape({
-    count: PropTypes.number,
-    price: PropTypes.number
-  })).isRequired,
+  count: PropTypes.number,
   totalPrice: PropTypes.number
 };
-
-CartInformation.defaultProps = {
-  cart: [],
-  totalPrice: 0,
-}
 
 export default React.memo(CartInformation);

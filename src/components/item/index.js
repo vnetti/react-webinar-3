@@ -39,7 +39,7 @@ Item.propTypes = {
     price: PropTypes.number,
     count: PropTypes.number
   }).isRequired,
-  onAddItemToCart: PropTypes.func
+  onAddItemToCart: PropTypes.func.isRequired
 };
 
 Item.defaultProps = {

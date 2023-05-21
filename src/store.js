@@ -43,25 +43,23 @@ class Store {
    * @param code
    */
   addItemToCart(code) {
-    const itemIndex = this.state.list.findIndex(item => item.code === code)
+    const product = this.state.list.find(item => item.code === code)
+    const cart = this.state.cart
+    const sameItem = cart.items.findIndex(item => item.code === code) >= 0
 
-    if (this.state.cart.findIndex(item => item.code === code) >= 0) {
-      this.setState({
-        ...this.state,
-        cart: this.state.cart.map(item => {
-          if (item.code === code) {
-            item.count ++
-            return item
-          }
-          return item
-        })
-      })
-    } else {
-      this.setState({
-        ...this.state,
-        cart: [...this.state.cart, {code: code, title: this.state.list[itemIndex].title, count: 1, price: this.state.list[itemIndex].price}]
-      })
-    }
+    this.setState({
+      ...this.state,
+      cart: {
+        ...cart,
+        items: sameItem
+          ? cart.items.map(item => item.code === code ? {...item, count: item.count + 1} : item)
+          : [...cart.items, {code: code, title: product.title, count: 1, price: product.price}],
+        totalPrice: cart.totalPrice + product.price || product.price,
+        itemsCount: cart.items.length > 0
+          ? sameItem ? cart.items.length : cart.items.length + 1
+          : 1
+      }
+    })
   }
 
   /**
@@ -69,10 +67,18 @@ class Store {
    * @param code
    */
   deleteItemFromCart(code) {
+    const product = this.state.cart.items.find(item => item.code === code)
+    const cart = this.state.cart
+
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой позиции
-      cart: this.state.cart.filter(item => item.code !== code)
+      // Новая корзина, в котором не будет удаляемой позиции
+      cart: {
+        ...cart,
+        items: cart.items.filter(item => item.code !== code),
+        totalPrice: cart.totalPrice - product.price * product.count,
+        itemsCount: cart.itemsCount - 1
+      }
     })
   };
 }

@@ -1,0 +1,9 @@
+.PopupHead {
+  height: 80px;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 34px 0 20px;
+  margin-bottom: 30px;
+}

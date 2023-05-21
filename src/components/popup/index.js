@@ -1,18 +1,23 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import PopupHead from "./popup-head";
 import './style.css';
 import {cn as bem} from '@bem-react/classname';
 
-function Popup({children, isOpened, onClose}){
+function Popup(props){
 
   const cn = bem('Popup')
 
-  if (!isOpened) return null
+  if (!props.isOpened) return null
 
   return (
     <div className={cn()}>
-      <div className={cn('overlay')} onClick={onClose}/>
-      <div className={cn('content')}>{children}</div>
+      <div className={cn('overlay')} onClick={props.onClose}/>
+      <div className={cn('content')}>
+        <PopupHead title="Корзина" onClose={props.onClose}/>
+        {props.children}
+        {/* здесь может появиться футтер попапа */}
+      </div>
     </div>
   )
 }
@@ -23,10 +28,4 @@ Popup.propTypes = {
   onClose: PropTypes.func.isRequired
 };
 
-Popup.defaultProps = {
-  children: <div>Не передан компонент!</div>,
-  isOpened: false,
-  onClose: () => {},
-}
-
-export default Popup;
+export default React.memo(Popup);

@@ -4,11 +4,10 @@ import './style.css';
 import {cn as bem} from '@bem-react/classname';
 import {formatToCurrency} from "../../../utils";
 
-function CartFooter({totalPrice, isEmpty}){
+function CartFooter({totalPrice}){
 
   const cn = bem('CartFooter')
 
-  if (!isEmpty) return null
   return (
     <div className={cn()}>
       <div className={cn('information')}>
@@ -20,13 +19,7 @@ function CartFooter({totalPrice, isEmpty}){
 }
 
 CartFooter.propTypes = {
-  totalPrice: PropTypes.number,
-  isEmpty: PropTypes.bool
+  totalPrice: PropTypes.number.isRequired,
 };
-
-CartFooter.defaultProps = {
-  totalPrice: 0,
-  isEmpty: true,
-}
 
 export default CartFooter;
