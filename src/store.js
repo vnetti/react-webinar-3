@@ -39,6 +39,20 @@ class Store {
   }
 
   /**
+   * Подсчет продуктов в корзине
+   * @param operation
+   */
+  changeItemsCartCount(operation) {
+    this.setState({
+      ...this.state,
+      cart: {
+        ...this.state.cart,
+        itemsCount: operation === 'add' ? this.state.cart.itemsCount + 1 || 1 : this.state.cart.itemsCount - 1
+      }
+    })
+  }
+
+  /**
    * Добавление товара в корзину
    * @param code
    */
@@ -46,7 +60,7 @@ class Store {
     const product = this.state.list.find(item => item.code === code)
     const cart = this.state.cart
     const sameItem = cart.items.findIndex(item => item.code === code) >= 0
-
+    console.log(this.state);
     this.setState({
       ...this.state,
       cart: {
@@ -55,11 +69,9 @@ class Store {
           ? cart.items.map(item => item.code === code ? {...item, count: item.count + 1} : item)
           : [...cart.items, {code: code, title: product.title, count: 1, price: product.price}],
         totalPrice: cart.totalPrice + product.price || product.price,
-        itemsCount: cart.items.length > 0
-          ? sameItem ? cart.items.length : cart.items.length + 1
-          : 1
       }
     })
+    !sameItem && this.changeItemsCartCount('add')
   }
 
   /**
@@ -77,9 +89,9 @@ class Store {
         ...cart,
         items: cart.items.filter(item => item.code !== code),
         totalPrice: cart.totalPrice - product.price * product.count,
-        itemsCount: cart.itemsCount - 1
       }
     })
+    this.changeItemsCartCount('delete')
   };
 }
 
