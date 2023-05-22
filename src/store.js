@@ -60,7 +60,7 @@ class Store {
     const product = this.state.list.find(item => item.code === code)
     const cart = this.state.cart
     const sameItem = cart.items.findIndex(item => item.code === code) >= 0
-    console.log(this.state);
+
     this.setState({
       ...this.state,
       cart: {
