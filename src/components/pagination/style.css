@@ -1,33 +1,8 @@
 .Pagination {
+    display: flex;
+    align-items: center;
+    list-style: none;
     max-width: fit-content;
     margin-left: auto;
     padding: 22px;
 }
-
-.Pagination-button {
-    font-size: 16px;
-    color: #000;
-    background: none;
-    border: none;
-    min-width: 20px;
-    min-height: 20px;
-}
-
-.Pagination-button:not(:disabled) {
-    cursor: pointer;
-}
-
-.Pagination-button:not(:disabled):hover {
-    background-color: #E1E1E1;
-}
-
-.Pagination-button:disabled {
-    color: #fff;
-    background-color: #0087E9;
-}
-
-.Pagination-buttonGap {
-    color: #ccc;
-}
-            
-            

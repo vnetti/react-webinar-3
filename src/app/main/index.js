@@ -35,10 +35,9 @@ function Main() {
     }, [callbacks.addToBasket]),
   };
 
-  if (select.isLoading || select.isLoading === null) return <div>Loading...</div>
+  if (select.isLoading || select.isLoading === null) return <div style={{padding: '20px'}}>Loading...</div>
 
-
-    return (
+  return (
     <>
       <List list={select.list} renderItem={renders.item}/>
       <Pagination onClick={callbacks.setCurrentPage}

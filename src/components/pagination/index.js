@@ -2,6 +2,7 @@ import "./style.css";
 import {cn as bem} from "@bem-react/classname";
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import PaginationItem from "./pagination-item";
 
 function Pagination({currentPage, totalPages, onClick}) {
 
@@ -18,21 +19,19 @@ function Pagination({currentPage, totalPages, onClick}) {
   }, []);
 
   return (
-    <div className={cn()}>
+    <ul className={cn()}>
       {pageValues.map(item => {
-        const gap = <span className={cn('buttonGap')}>...</span>
-        const isGapBefore = item < currentPage && item !== totalPages - 1 && item !== 1
-        const isGapAfter = item > currentPage && item !== 2 && item !== totalPages
-
-        return <>
-          {isGapBefore ? gap : ''}
-          <button key={item}
-                  className={cn('button')}
-                  disabled={item === currentPage}
-                  onClick={() => onClick(item)}>{item}</button>
-          {isGapAfter ? gap : ''}
-        </>})}
-    </div>
+        const isDisabled = item === currentPage
+        const gap = {
+          before: (item < currentPage && item !== totalPages - 1 && item !== 1) && <span>...</span>,
+          after: (item > currentPage && item !== 2 && item !== totalPages) && <span>...</span>
+        }
+        return <PaginationItem key={item}
+                               item={item}
+                               onClick={onClick}
+                               isDisabled={isDisabled}
+                               gap={gap}/>})}
+    </ul>
   )
 }
 
