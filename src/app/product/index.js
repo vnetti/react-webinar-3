@@ -3,6 +3,7 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import {useParams} from "react-router-dom";
 import ProductCard from "../../components/product-card";
+import ProductCardSkeleton from "../../components/product-card/product-card-skeleton";
 
 function Product() {
 
@@ -27,7 +28,7 @@ function Product() {
   return (
     <>
       {select.isLoading || select.isLoading === null ?
-        <div>Loading...</div> :
+        <ProductCardSkeleton/> :
         <ProductCard onClick={callbacks.addToBasket} card={select.item}/>}
     </>
   );
