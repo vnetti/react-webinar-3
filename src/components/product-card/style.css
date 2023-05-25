@@ -1,0 +1,25 @@
+.ProductCard {
+    padding: 0 40px;
+    list-style: none;
+}
+
+.ProductCard-paragraph {
+    font-size: 18px;
+    margin: 20px 0;
+    color: #000;
+}
+
+.ProductCard-paragraph_bold {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.ProductCard-paragraph span {
+    font-weight: 700;
+}
+
+.ProductCard-button {
+    padding-left: 40px;
+}
+            
+            

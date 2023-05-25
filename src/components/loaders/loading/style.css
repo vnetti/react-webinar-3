@@ -1,0 +1,7 @@
+.Loading {
+    display: flex;
+}
+
+.Loading-svg {
+    align-self: end;
+}
