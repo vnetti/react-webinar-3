@@ -20,7 +20,7 @@
   text-decoration: none;
 }
 
-.ItemBasket-title:hover a {
+.ItemBasket-title a:hover {
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }

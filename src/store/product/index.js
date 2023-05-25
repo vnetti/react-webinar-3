@@ -21,13 +21,6 @@ class Product extends StoreModule {
     }, 'Очищен товар')
   }
 
-  setIsLoading(status = true) {
-    this.setState({
-      ...this.getState(),
-      isLoading: status
-    }, 'Изменен статус product/isLoading')
-  }
-
   async getById(id) {
     this.setIsLoading()
     const response = await fetch(`/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`);

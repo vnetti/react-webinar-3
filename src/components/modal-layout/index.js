@@ -21,7 +21,7 @@ function ModalLayout(props) {
         : 'center';
     });
     // Следим за изменениями размеров layout
-    resizeObserver.observe(layout.current);
+    layout.current && resizeObserver.observe(layout.current); // исправил ошибку, иногда при закрытии модалки при смене страницы вылазила ошибка
     return () => {
       resizeObserver.disconnect();
     }

@@ -24,6 +24,13 @@ class StoreModule {
     }, description)
   }
 
+  setIsLoading(status = true) {
+    this.setState({
+      ...this.getState(),
+      isLoading: status
+    }, `Изменен статус ${this.name}/isLoading на ${status}`)
+  }
+
 }
 
 export default StoreModule;

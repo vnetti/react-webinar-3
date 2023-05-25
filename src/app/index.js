@@ -26,7 +26,7 @@ function App() {
   const path = useLocation().pathname
 
   useEffect(() => {
-    store.actions.modals.close()
+    select.activeModal && store.actions.modals.close()
   }, [path]);
 
   const {head, nav} = useTitle(select, store)

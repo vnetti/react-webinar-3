@@ -3,6 +3,7 @@ import Item from "../../components/item";
 import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
+import Pagination from "../../components/pagination";
 
 function Main() {
 
@@ -14,6 +15,9 @@ function Main() {
 
   const select = useSelector(state => ({
     list: state.catalog.list,
+    isLoading: state.catalog.isLoading,
+    currentPage: state.catalog.currentPage,
+    totalProducts: state.catalog.totalProducts,
     amount: state.basket.amount,
     sum: state.basket.sum
   }));
@@ -21,6 +25,8 @@ function Main() {
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+    // Изменение страницы пагинации
+    setCurrentPage: useCallback(page => store.actions.catalog.setCurrentPage(page),[store])
   }
 
   const renders = {
@@ -29,9 +35,15 @@ function Main() {
     }, [callbacks.addToBasket]),
   };
 
-  return (
+  if (select.isLoading || select.isLoading === null) return <div>Loading...</div>
+
+
+    return (
     <>
       <List list={select.list} renderItem={renders.item}/>
+      <Pagination onClick={callbacks.setCurrentPage}
+                  currentPage={parseInt(select.currentPage)}
+                  totalPages={Math.ceil(select.totalProducts / 10)}/>
     </>
   );
 }

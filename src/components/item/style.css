@@ -24,7 +24,7 @@
   text-decoration: none;
 }
 
-.Item-title:hover a {
+.Item-title a:hover {
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
