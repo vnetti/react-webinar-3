@@ -8,6 +8,7 @@ import Head from "../../components/head";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
+import UserInfo from "../../containers/user-info";
 
 function Main() {
 
@@ -21,6 +22,7 @@ function Main() {
 
   return (
     <PageLayout>
+      <UserInfo/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>

@@ -16,9 +16,11 @@ class CatalogState extends StoreModule {
         page: 1,
         limit: 10,
         sort: 'order',
-        query: ''
+        query: '',
+        category: ''
       },
       count: 0,
+      categories: [],
       waiting: false
     }
   }
@@ -36,7 +38,14 @@ class CatalogState extends StoreModule {
     if (urlParams.has('limit')) validParams.limit = Math.min(Number(urlParams.get('limit')) || 10, 50);
     if (urlParams.has('sort')) validParams.sort = urlParams.get('sort');
     if (urlParams.has('query')) validParams.query = urlParams.get('query');
+    if (urlParams.has('category')) validParams.category = urlParams.get('category');
+
+    // const categories = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`)
+    // const json = await categories.json()
+    // await this.setState({...this.getState(), categories: json.result.items}, 'Загружены категории')
+
     await this.setParams({...this.initState().params, ...validParams, ...newParams}, true);
+    await this.loadCategories()
   }
 
   /**
@@ -81,8 +90,12 @@ class CatalogState extends StoreModule {
       skip: (params.page - 1) * params.limit,
       fields: 'items(*),count',
       sort: params.sort,
-      'search[query]': params.query
+      'search[query]': params.query,
+      'search[category]': '6477698510d1060c910cbb' + params.category
     };
+
+    // Не добавлять в запрос к API категорию, если она пустая
+    !params.category && delete apiParams["search[category]"]
 
     const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
     const json = await response.json();
@@ -92,6 +105,16 @@ class CatalogState extends StoreModule {
       count: json.result.count,
       waiting: false
     }, 'Загружен список товаров из АПИ');
+  }
+
+  async loadCategories() {
+    const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`)
+    const json = await response.json()
+
+    this.setState({
+      ...this.getState(),
+      categories: json.result.items
+    }, 'Загружены категории')
   }
 }
 

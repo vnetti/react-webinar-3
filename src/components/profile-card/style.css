@@ -1,0 +1,20 @@
+.ProfileCard {
+    padding: 20px;
+}
+
+.ProfileCard-prop {
+    display: flex;
+    margin-top: 20px;
+}
+
+.ProfileCard-prop:first-of-type {
+    margin-top: 30px;
+}
+
+.ProfileCard-label {
+    padding-right: 5px;
+}
+
+.ProfileCard-value {
+    font-weight: 700;
+}
