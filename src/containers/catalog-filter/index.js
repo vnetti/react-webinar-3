@@ -35,7 +35,10 @@ function CatalogFilter() {
       {value: '-price', title: 'Сначала дорогие'},
       {value: 'edition', title: 'Древние'},
     ]), []),
-    categories: useMemo(() => select.categories.map(category => ({value: category._id.substring(category._id.length - 2), title: category.title})), [select])
+    categories: useMemo(() => select.categories.map(category => ({
+      value: category._id.substring(category._id.length - 2),
+      title: `${'- '.repeat(category.nesting)}${category.title}`
+    })), [select])
   };
 
   const {t} = useTranslate();

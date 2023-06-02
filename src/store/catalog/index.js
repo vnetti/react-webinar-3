@@ -107,14 +107,45 @@ class CatalogState extends StoreModule {
     }, 'Загружен список товаров из АПИ');
   }
 
+  /**
+   * Загрузка категорий
+   * @returns {Promise<void>}
+   */
   async loadCategories() {
     const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`)
     const json = await response.json()
 
+    // Считаем вложенность для каждого элемента
+    json.result.items.forEach(category => {
+      let count = 0
+      function nestingCount(item) {
+        if (item.parent) {
+          const parent = json.result.items.find(foundItem => foundItem._id === item.parent._id)
+          return nestingCount(parent, count++)
+        } else return count
+      }
+      category.nesting = nestingCount(category)
+    })
+
+    // Создаем коллекцию уникальных категорий
+    const sortedCategories = new Set()
+
+    // Функция сортировки категорий и добавление их в Set
+    function sortCategories(categories) {
+      categories.forEach( category => {
+        sortedCategories.add(category)
+        const children = json.result.items.filter(item => item.parent?._id === category._id)
+        if (children.length) sortCategories(children)
+      })
+    }
+    sortCategories(json.result.items)
+
+    // Добавляем категории в состояние
     this.setState({
       ...this.getState(),
-      categories: json.result.items
+      categories: Array.from(sortedCategories)
     }, 'Загружены категории')
+
   }
 }
 
