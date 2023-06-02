@@ -36,11 +36,11 @@ class ArticleState extends StoreModule {
 
     } catch (e) {
       // Ошибка при загрузке
-      // @todo В стейт можно положить информацию об ошибке
       this.setState({
         data: {},
-        waiting: false
-      });
+        waiting: false,
+        error: e.message
+      }, `Ошибка при загрузке товара: ${e.message}`);
     }
   }
 }
