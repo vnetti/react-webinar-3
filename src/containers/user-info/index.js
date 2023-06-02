@@ -4,6 +4,7 @@ import SideLayout from "../../components/side-layout";
 import useStore from "../../hooks/use-store";
 import useInit from "../../hooks/use-init";
 import useSelector from "../../hooks/use-selector";
+import useTranslate from "../../hooks/use-translate";
 
 function UserInfo() {
 
@@ -18,8 +19,11 @@ function UserInfo() {
     userName: state.user.data.name || 'Профиль',
   }))
 
+  // Функция для локализации текстов
+  const {t} = useTranslate();
+
   const data = {
-    buttonTitle: select.isAuth ? 'Выход' : 'Вход'
+    buttonTitle: select.isAuth ? t('user-info.logout') : t('user-info.login')
   }
 
   const navigate = useNavigate()

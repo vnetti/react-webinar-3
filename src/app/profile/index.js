@@ -16,6 +16,7 @@ function Profile() {
     user: state.user.data
   }))
 
+  // Функция для локализации текстов
   const {t} = useTranslate();
 
   if (!select.isAuth) return <Navigate to={'/login'} />
@@ -27,7 +28,7 @@ function Profile() {
         <LocaleSelect/>
       </Head>
       <Navigation />
-      <ProfileCard user={select.user}/>
+      <ProfileCard user={select.user} t={t}/>
     </PageLayout>
   );
 }

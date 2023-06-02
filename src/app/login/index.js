@@ -19,6 +19,7 @@ function Login() {
     errorMessage: state.user.error.message
   }))
 
+  // Функция для локализации текстов
   const {t} = useTranslate();
 
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ function Login() {
         <LocaleSelect/>
       </Head>
       <Navigation />
-      <LoginForm error={select.errorMessage} onClick={callbacks.signIn}/>
+      <LoginForm error={select.errorMessage} onClick={callbacks.signIn} t={t}/>
     </PageLayout>
   );
 

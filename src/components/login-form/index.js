@@ -17,20 +17,20 @@ function LoginForm(props) {
 
   return (
     <div className={cn()}>
-      <h2>Вход</h2>
+      <h2>{props.t('login.title')}</h2>
       <div className={cn('row')}>
-        <span>Логин</span>
+        <span>{props.t('login.login')}</span>
         <Input value={login} onChange={callbacks.onChangeLogin}/>
       </div>
       <div className={cn('row')}>
-        <span>Пароль</span>
+        <span>{props.t('login.password')}</span>
         <Input value={password} onChange={callbacks.onChangePassword} type="password"/>
       </div>
       {props.error ? <div className={cn('row')}>
         <p className={cn('error')}>{props.error}</p>
       </div> : ''}
       <div className={cn('row')}>
-        <input onClick={() => props.onClick(login, password)} type="button" value="Войти"/>
+        <input onClick={() => props.onClick(login, password)} type="button" value={props.t('login.button')}/>
       </div>
     </div>
   );
@@ -38,11 +38,13 @@ function LoginForm(props) {
 
 LoginForm.propTypes = {
   onClick: PropTypes.func,
-  error: PropTypes.arrayOf(PropTypes.string)
+  error: PropTypes.arrayOf(PropTypes.string),
+  t: PropTypes.func
 };
 
 LoginForm.defaultProps = {
   onClick: () => {},
+  t: (text) => text
 }
 
 export default memo(LoginForm);
