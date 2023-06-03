@@ -13,7 +13,7 @@ class UserState extends StoreModule {
     return {
       data: {},
       error: '',
-      isAuth: false,
+      isAuth: null,
     }
   }
 

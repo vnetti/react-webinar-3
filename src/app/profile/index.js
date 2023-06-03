@@ -8,6 +8,7 @@ import UserInfo from "../../containers/user-info";
 import {Navigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import ProfileCard from "../../components/profile-card";
+import Spinner from "../../components/spinner";
 
 function Profile() {
 
@@ -19,7 +20,7 @@ function Profile() {
   // Функция для локализации текстов
   const {t} = useTranslate();
 
-  if (!select.isAuth) return <Navigate to={'/login'} />
+  if (select.isAuth === false) return <Navigate to={'/login'} />
 
   return (
     <PageLayout>
@@ -28,7 +29,9 @@ function Profile() {
         <LocaleSelect/>
       </Head>
       <Navigation />
-      <ProfileCard user={select.user} t={t}/>
+      <Spinner active={!select.isAuth}>
+        <ProfileCard user={select.user} t={t}/>
+      </Spinner>
     </PageLayout>
   );
 }
