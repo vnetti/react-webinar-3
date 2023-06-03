@@ -16,6 +16,7 @@ class Store {
      * locale: LocaleState,
      * user: UserState,
      * profile: ProfileState,
+     * categories: CategoriesState,
      * }} */
     this.actions = {};
     for (const name of Object.keys(modules)) {
@@ -47,6 +48,7 @@ class Store {
    * locale: Object,
    * user: UserState,
    * profile: ProfileState,
+   * categories: CategoriesState,
    * }}
    */
   getState() {
@@ -55,6 +57,7 @@ class Store {
 
   /**
    * Установка состояния
+   * @param description {String} - описание нового состояния
    * @param newState {Object}
    */
   setState(newState, description = 'setState') {

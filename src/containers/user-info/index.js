@@ -2,7 +2,6 @@ import {memo, useCallback} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import SideLayout from "../../components/side-layout";
 import useStore from "../../hooks/use-store";
-import useInit from "../../hooks/use-init";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 

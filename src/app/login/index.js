@@ -9,7 +9,6 @@ import LoginForm from "../../components/login-form";
 import UserInfo from "../../containers/user-info";
 import {Navigate, useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
-import useInit from "../../hooks/use-init";
 
 function Login() {
 

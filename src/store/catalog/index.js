@@ -20,7 +20,6 @@ class CatalogState extends StoreModule {
         category: ''
       },
       count: 0,
-      categories: [],
       waiting: false
     }
   }
@@ -40,12 +39,7 @@ class CatalogState extends StoreModule {
     if (urlParams.has('query')) validParams.query = urlParams.get('query');
     if (urlParams.has('category')) validParams.category = urlParams.get('category');
 
-    // const categories = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`)
-    // const json = await categories.json()
-    // await this.setState({...this.getState(), categories: json.result.items}, 'Загружены категории')
-
     await this.setParams({...this.initState().params, ...validParams, ...newParams}, true);
-    await this.loadCategories()
   }
 
   /**
@@ -105,47 +99,6 @@ class CatalogState extends StoreModule {
       count: json.result.count,
       waiting: false
     }, 'Загружен список товаров из АПИ');
-  }
-
-  /**
-   * Загрузка категорий
-   * @returns {Promise<void>}
-   */
-  async loadCategories() {
-    const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`)
-    const json = await response.json()
-
-    // Считаем вложенность для каждого элемента
-    json.result.items.forEach(category => {
-      let count = 0
-      function nestingCount(item) {
-        if (item.parent) {
-          const parent = json.result.items.find(foundItem => foundItem._id === item.parent._id)
-          return nestingCount(parent, count++)
-        } else return count
-      }
-      category.nesting = nestingCount(category)
-    })
-
-    // Создаем коллекцию уникальных категорий
-    const sortedCategories = new Set()
-
-    // Функция сортировки категорий и добавление их в Set
-    function sortCategories(categories) {
-      categories.forEach( category => {
-        sortedCategories.add(category)
-        const children = json.result.items.filter(item => item.parent?._id === category._id)
-        if (children.length) sortCategories(children)
-      })
-    }
-    sortCategories(json.result.items)
-
-    // Добавляем категории в состояние
-    this.setState({
-      ...this.getState(),
-      categories: Array.from(sortedCategories)
-    }, 'Загружены категории')
-
   }
 }
 
