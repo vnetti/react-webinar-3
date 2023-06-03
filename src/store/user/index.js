@@ -18,6 +18,16 @@ class UserState extends StoreModule {
   }
 
   /**
+   * Сброс ошибки
+   */
+  resetError() {
+    this.setState({
+      ...this.getState(),
+      error: ''
+    }, 'Сброс ошибки UserState')
+  }
+
+  /**
    * Вход в систему
    * @param login {string} - Логин пользователя
    * @param password {string} - Пароль пользователя
@@ -62,14 +72,13 @@ class UserState extends StoreModule {
    * @returns {Promise<void>}
    */
   async logout() {
-    const result = await fetch('/api/v1/users/sign', {
+    await fetch('/api/v1/users/sign', {
       method: 'DELETE',
       headers: {
       'Content-Type': 'application/json',
       'X-Token': localStorage.getItem('X-Token')
       }
     })
-    const json = await result.json()
 
     this.setState({
       ...this.getState(),

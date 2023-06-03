@@ -1,4 +1,4 @@
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useLayoutEffect} from 'react';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import Navigation from "../../containers/navigation";
@@ -9,10 +9,15 @@ import LoginForm from "../../components/login-form";
 import UserInfo from "../../containers/user-info";
 import {Navigate, useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
+import useInit from "../../hooks/use-init";
 
 function Login() {
 
   const store = useStore();
+
+  useLayoutEffect(() => {
+    store.actions.user.resetError()
+  }, []);
 
   const select = useSelector(state => ({
     isAuth: state.user.isAuth,
