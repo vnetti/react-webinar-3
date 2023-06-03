@@ -35,7 +35,7 @@ function UserInfo() {
   }
 
   return (
-    <SideLayout side={"end"} padding={"medium"}>
+    <SideLayout side={"end"} paddingY={"small"} paddingX={"medium"} gap={"medium"} border={'solid'} borderB={"1"} borderColor={"gainsboro"}>
         {select.isAuth ? <Link to={'/profile'}>{select.userName}</Link> : ''}
         <button onClick={callbacks.onClick}>{data.buttonTitle}</button>
     </SideLayout>
