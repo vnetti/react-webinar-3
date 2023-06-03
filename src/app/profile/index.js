@@ -9,12 +9,20 @@ import {Navigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import ProfileCard from "../../components/profile-card";
 import Spinner from "../../components/spinner";
+import useInit from "../../hooks/use-init";
+import useStore from "../../hooks/use-store";
 
 function Profile() {
 
+  const store = useStore()
+
+  useInit(() => {
+    store.actions.profile.getProfile()
+  })
+
   const select = useSelector(state => ({
     isAuth: state.user.isAuth,
-    user: state.user.data
+    user: state.profile.data
   }))
 
   // Функция для локализации текстов

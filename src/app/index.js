@@ -18,7 +18,7 @@ function App() {
   const store = useStore()
 
   useInit(() => {
-    localStorage.getItem('X-Token') && store.actions.user.getSelf()
+    localStorage.getItem('X-Token') && store.actions.user.getUser()
   }, []);
 
   const activeModal = useSelector(state => state.modals.name);

@@ -34,7 +34,7 @@ class UserState extends StoreModule {
    * @returns {Promise<void>}
    */
   async login(login, password) {
-    const result = await fetch('/api/v1/users/sign?fields=_id,profile(name,phone),email', {
+    const result = await fetch('/api/v1/users/sign?fields=_id,profile(name)', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({login, password})
@@ -46,9 +46,7 @@ class UserState extends StoreModule {
         ...this.getState(),
         data: {
           _id: json.result.user._id,
-          name: json.result.user.profile.name,
-          email: json.result.user.email,
-          phone: json.result.user.profile.phone
+          name: json.result.user.profile.name
         },
         error: '',
         isAuth: true
@@ -89,11 +87,11 @@ class UserState extends StoreModule {
   }
 
   /**
-   * Свой профиль
+   * Получить пользователя, если залогинены
    * @returns {Promise<void>}
    */
-  async getSelf() {
-    const result = await fetch('/api/v1/users/self?fields=_id,profile(name,phone),email', {
+  async getUser() {
+    const result = await fetch('/api/v1/users/self?fields=_id,profile(name)', {
       headers: {
         'Content-Type': 'application/json',
         'X-Token': localStorage.getItem('X-Token')
@@ -115,9 +113,7 @@ class UserState extends StoreModule {
         ...this.getState(),
         data: {
           _id: json.result._id,
-          name: json.result.profile.name,
-          email: json.result.email,
-          phone: json.result.profile.phone
+          name: json.result.profile.name
         },
         error: '',
         isAuth: true
