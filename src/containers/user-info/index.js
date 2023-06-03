@@ -10,10 +10,6 @@ function UserInfo() {
 
   const store = useStore()
 
-  useInit(() => {
-    localStorage.getItem('X-Token') && store.actions.user.getSelf()
-  }, []);
-
   const select = useSelector(state => ({
     isAuth: state.user.isAuth,
     userName: state.user.data.name || 'Профиль',
