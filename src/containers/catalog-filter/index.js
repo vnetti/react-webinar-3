@@ -41,7 +41,7 @@ function CatalogFilter() {
       {value: 'edition', title: 'Древние'},
     ]), []),
     categories: useMemo(() => select.categories.map(category => ({
-      value: category._id.substring(category._id.length - 2),
+      value: category._id,
       title: `${'- '.repeat(category.nesting)}${category.title}`
     })), [select])
   };
