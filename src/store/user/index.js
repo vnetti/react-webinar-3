@@ -103,8 +103,7 @@ class UserState extends StoreModule {
       this.setState({
         ...this.getState(),
         error: {
-          _id: json.error.id,
-          message: json.error.data.issues.map(issue => issue.message)
+          _id: json.error.id
         },
         isAuth: false
       }, json.error.data.issues.map(issue => issue.message))

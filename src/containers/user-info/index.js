@@ -1,5 +1,5 @@
 import {memo, useCallback} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import SideLayout from "../../components/side-layout";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
@@ -22,10 +22,11 @@ function UserInfo() {
   }
 
   const navigate = useNavigate()
+  const location = useLocation()
   const callbacks = {
     onClick: useCallback(() => {
       if (select.isAuth) return store.actions.user.logout()
-      return navigate('/login')
+      return navigate('/login', {state: {from: location}})
     }, [select.isAuth]),
   }
 

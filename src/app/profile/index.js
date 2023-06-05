@@ -5,7 +5,6 @@ import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import UserInfo from "../../containers/user-info";
-import {Navigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import ProfileCard from "../../components/profile-card";
 import Spinner from "../../components/spinner";
@@ -27,8 +26,6 @@ function Profile() {
 
   // Функция для локализации текстов
   const {t} = useTranslate();
-
-  if (select.isAuth === false) return <Navigate to={'/login'} />
 
   return (
     <PageLayout>

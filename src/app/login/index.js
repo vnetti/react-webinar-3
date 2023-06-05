@@ -7,7 +7,7 @@ import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import LoginForm from "../../components/login-form";
 import UserInfo from "../../containers/user-info";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 
 function Login() {
@@ -33,7 +33,9 @@ function Login() {
     signIn: useCallback((login, password) => store.actions.user.login(login, password),[])
   }
 
-  if (select.isAuth) return <Navigate to={'/profile'}/>
+  const location = useLocation()
+
+  if (select.isAuth) return <Navigate to={location.state?.from.pathname || '/'}/>
 
   return (
     <PageLayout>
