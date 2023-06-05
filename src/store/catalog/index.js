@@ -85,7 +85,7 @@ class CatalogState extends StoreModule {
       fields: 'items(*),count',
       sort: params.sort,
       'search[query]': params.query,
-      'search[category]': '6477698510d1060c910cbb' + params.category
+      'search[category]': params.category
     };
 
     // Не добавлять в запрос к API категорию, если она пустая
