@@ -2,7 +2,8 @@
 const initialState = {
   list: [],
   count: 0,
-  waiting: false // признак ожидания загрузки
+  waiting: false, // признак ожидания загрузки
+  error: ''
 }
 
 // Обработчик действий
@@ -16,6 +17,12 @@ function reducer(state = initialState, action) {
 
     case "comments/load-error":
       return { ...state, list: [], count: 0, waiting: false}; //@todo текст ошибки сохранить
+
+    case "comments/new":
+      return { ...action.state, list: [...action.state.list, action.payload.data], count: action.state.count + 1};
+
+    case "comments/new-error":
+      return { ...action.state, error: action.payload.error}; //@todo текст ошибки сохранить
 
     default:
       // Нет изменений

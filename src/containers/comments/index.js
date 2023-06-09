@@ -1,4 +1,4 @@
-import {memo, useMemo} from "react";
+import {memo, useCallback, useMemo, useState} from "react";
 import {useSelector as useSelectorRedux, useDispatch} from "react-redux";
 import useTranslate from "../../hooks/use-translate";
 import Spinner from "../../components/spinner";
@@ -33,6 +33,7 @@ function Comments() {
   const data = {
     comments: useMemo(() => listToTree(select.comments, item => item.parent._type === 'comment', item => ({
       _id: item._id,
+      _type: item._type,
       text: item.isDeleted ? 'Комментарий удален -_-' : item.text,
       authorName: item.author.profile.name,
       dateCreate: format(new Date(item.dateCreate), `dd MMMM yyyy в ${lang === 'ru' ? 'HH:mm' : 'hh:mm bbbb'}`, {locale: lang === 'ru' ? ru : enUS}),
@@ -40,13 +41,34 @@ function Comments() {
     })), [select.comments, lang]),
   }
 
+  const [comment, setComment] = useState({_id: params.id, _type: 'article'})
+  const [commentText, setCommentText] = useState('')
+
+  const callbacks = {
+    onReply: useCallback((_id, _type) => setComment({_id, _type}), []),
+    onChange: useCallback((value) => setCommentText(value), []),
+    onSubmit: useCallback((e) => {
+      e.preventDefault()
+      dispatch(commentsActions.submit(commentText, comment._id, comment._type))
+    }, [commentText]),
+    onClose: useCallback(() => setComment({_id: params.id, _type: 'article'}), [])
+  }
+
   return (
     <Spinner active={select.waiting}>
       <SideLayout paddingX={'big'}>
         <h3>Комментарии ({select.count})</h3>
       </SideLayout>
-      <ListComments list={data.comments}/>
-      <FormComment title={'Новый комментарий'}/>
+      <ListComments currentCommentToReply={comment}
+                    list={data.comments}
+                    onClose={callbacks.onClose}
+                    onChange={callbacks.onChange}
+                    onSubmit={callbacks.onSubmit}
+                    onReply={callbacks.onReply}/>
+      {comment._id === params.id  && <FormComment onSubmit={callbacks.onSubmit}
+                                onClose={callbacks.onClose}
+                                onChange={callbacks.onChange}
+                                title={'Новый комментарий'}/>}
     </Spinner>
   );
 }

@@ -3,7 +3,7 @@ import {memo} from "react";
 import {cn as bem} from '@bem-react/classname'
 import './style.css'
 
-function ItemComment({comment, onReply = () => {}}) { //@todo убрать заглушку
+function ItemComment({comment, onReply}) {
 
   const cn = bem('ItemComment')
 
@@ -17,7 +17,7 @@ function ItemComment({comment, onReply = () => {}}) { //@todo убрать за�
         <p className={cn('text')}>{comment.text}</p>
       </div>
       <div className={cn('footer')}>
-        {onReply && <button className={cn('reply')} onClick={() => onReply()}>Ответить</button>}
+        {onReply && <button className={cn('reply')} onClick={() => onReply(comment._id, comment._type)}>Ответить</button>}
       </div>
     </div>
   )
@@ -26,12 +26,13 @@ function ItemComment({comment, onReply = () => {}}) { //@todo убрать за�
 
 ItemComment.PropTypes = {
   comment: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    dateCreate: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    authorName: PropTypes.string.isRequired,
-    isDeleted: PropTypes.bool.isRequired,
-    level: PropTypes.number.isRequired,
+    _id: PropTypes.string,
+    _type: PropTypes.string,
+    dateCreate: PropTypes.string,
+    text: PropTypes.string,
+    authorName: PropTypes.string,
+    isDeleted: PropTypes.bool,
+    level: PropTypes.number,
   }).isRequired,
   onReply: PropTypes.func
 }

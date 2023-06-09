@@ -24,6 +24,8 @@ function TextArea(props) {
   // Обновление стейта, если передан новый value
   useLayoutEffect(() => setValue(props.value), [props.value]);
 
+
+
   const cn = bem('TextArea');
   return (
     <textarea
