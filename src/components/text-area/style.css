@@ -1,0 +1,26 @@
+.TextArea {
+    padding: 5px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.TextArea_theme_big {
+    width: 300px;
+}
+
+.TextArea_theme_full {
+    width: 100%;
+    height: 80px;
+}
+
+.TextArea_resize {
+    resize: both;
+}
+
+.TextArea_resize_horizontal {
+    resize: horizontal;
+}
+
+.TextArea_resize_vertical {
+    resize: vertical;
+}

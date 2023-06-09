@@ -28,6 +28,11 @@
   padding: 20px;
 }
 
+.SideLayout_paddingX_big {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 .SideLayout-item {
   margin: 0 5px;
 }

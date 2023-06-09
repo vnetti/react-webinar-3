@@ -1,0 +1,35 @@
+.ItemComment {
+    padding: 15px 0;
+    font-size: 12px;
+}
+
+.ItemComment_isDeleted {
+    user-select: none;
+    opacity: .3;
+}
+
+.ItemComment-header {
+    display: flex;
+    gap: 0 10px;
+}
+
+.ItemComment-authorName {
+    font-weight: 700;
+}
+
+.ItemComment-text {
+    font-size: 14px;
+    overflow-wrap: break-word;
+}
+
+.ItemComment-dateCreate {
+    color: #666666;
+}
+
+.ItemComment-reply {
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #0087E9;
+}

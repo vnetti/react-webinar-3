@@ -1,0 +1,14 @@
+.FormComment {
+    padding: 0 40px 20px;
+    font-size: 14px;
+}
+
+.FormComment-title {
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.FormComment textarea {
+    border-color: #666666;
+    font-size: 14px;
+}

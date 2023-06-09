@@ -1,0 +1,14 @@
+.ListComments {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ListComments_offset {
+    margin-left: 30px;
+}
+
+.ListComments_root {
+    margin: 0;
+    padding: 0 40px;
+}
