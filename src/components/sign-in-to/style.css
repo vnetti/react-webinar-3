@@ -1,0 +1,37 @@
+.SingInTo {
+
+}
+
+.SingInTo > p > a {
+    color: #0087E9;
+}
+
+.SingInTo_paddingY_small {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.SingInTo_paddingY_medium {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.SingInTo_paddingX_small {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.SingInTo_paddingX_medium {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.SingInTo_paddingX_big {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.SingInTo_paddingX_very-big {
+    padding-left: 40px;
+    padding-right: 40px;
+}

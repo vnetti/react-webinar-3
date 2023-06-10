@@ -12,6 +12,9 @@ import {format} from "date-fns";
 import {enUS, ru} from "date-fns/locale";
 import SideLayout from "../../components/side-layout";
 import FormComment from "../../components/form-comment";
+import useSelector from "../../hooks/use-selector";
+import ProtectedPart from "../protected-part";
+import SignInTo from "../../components/sign-in-to";
 
 function Comments() {
 
@@ -25,10 +28,15 @@ function Comments() {
   const select = useSelectorRedux(state => ({
     comments: state.comments.list,
     waiting: state.comments.waiting,
-    count: state.comments.count
-  }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
+    count: state.comments.count,
+  }), shallowequal)
+
+  const userName = useSelector(state => state.session.user.profile?.name)
 
   const {lang, t} = useTranslate();
+
+  const [comment, setComment] = useState({_id: params.id, _type: 'article'})
+  const [commentText, setCommentText] = useState('')
 
   const data = {
     comments: useMemo(() => listToTree(select.comments, item => item.parent._type === 'comment', item => ({
@@ -38,11 +46,8 @@ function Comments() {
       authorName: item.author.profile.name,
       dateCreate: format(new Date(item.dateCreate), `dd MMMM yyyy в ${lang === 'ru' ? 'HH:mm' : 'hh:mm bbbb'}`, {locale: lang === 'ru' ? ru : enUS}),
       isDeleted: item.isDeleted
-    })), [select.comments, lang]),
+    })), [select.comments, lang])
   }
-
-  const [comment, setComment] = useState({_id: params.id, _type: 'article'})
-  const [commentText, setCommentText] = useState('')
 
   const callbacks = {
     onReply: useCallback((_id, _type) => setComment({_id, _type}), []),
@@ -61,14 +66,15 @@ function Comments() {
       </SideLayout>
       <ListComments currentCommentToReply={comment}
                     list={data.comments}
+
                     onClose={callbacks.onClose}
                     onChange={callbacks.onChange}
                     onSubmit={callbacks.onSubmit}
                     onReply={callbacks.onReply}/>
-      {comment._id === params.id  && <FormComment onSubmit={callbacks.onSubmit}
-                                onClose={callbacks.onClose}
-                                onChange={callbacks.onChange}
-                                title={'Новый комментарий'}/>}
+
+      {comment._id === params.id && <ProtectedPart element={<SignInTo paddingX={'very-big'} ability={'комментировать'} paddingY={'medium'}/>}>
+        <FormComment onSubmit={callbacks.onSubmit} onChange={callbacks.onChange} title={'Новый комментарий'}/>
+      </ProtectedPart>}
     </Spinner>
   );
 }

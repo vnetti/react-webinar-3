@@ -1,5 +1,5 @@
 .FormComment {
-    padding: 0 40px 40px;
+    padding: 15px 40px;
     font-size: 14px;
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
 }
 
 .FormComment_reply {
-    padding: 15px 30px;
+    padding-left: 30px;
 }
 
 .FormComment-title {
