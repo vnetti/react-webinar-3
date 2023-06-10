@@ -58,9 +58,16 @@ function Comments() {
     onChange: useCallback((value) => setCommentText(value), []),
     onSubmit: useCallback((e) => {
       e.preventDefault()
-      comment._id !== params.id && setComment({_id: params.id, _type: 'article'})
-      dispatch(commentsActions.submit(commentText, comment._id, comment._type))
-      setCommentText('')
+      const text = commentText.trim()
+      if (!text) {
+        alert(`Введите ваш текст для ${comment._id === params.id ? 'комментария' : 'ответа'}`)
+        setCommentText('') // если это были одни пробелы
+      }
+      else {
+        comment._id !== params.id && setComment({_id: params.id, _type: 'article'})
+        dispatch(commentsActions.submit(text, comment._id, comment._type))
+        setCommentText('')
+      }
     }, [commentText]),
     onClose: useCallback(() => setComment({_id: params.id, _type: 'article'}), [])
   }
