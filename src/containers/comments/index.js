@@ -58,6 +58,7 @@ function Comments() {
     onChange: useCallback((value) => setCommentText(value), []),
     onSubmit: useCallback((e) => {
       e.preventDefault()
+      comment._id !== params.id && setComment({_id: params.id, _type: 'article'})
       dispatch(commentsActions.submit(commentText, comment._id, comment._type))
       setCommentText('')
     }, [commentText]),
