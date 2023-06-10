@@ -21,7 +21,8 @@ class ArticleState extends StoreModule {
     // Сброс текущего товара и установка признака ожидания загрузки
     this.setState({
       data: {},
-      waiting: true
+      waiting: true,
+      error: ''
     });
 
     try {
@@ -37,10 +38,10 @@ class ArticleState extends StoreModule {
 
     } catch (e) {
       // Ошибка при загрузке
-      // @todo В стейт можно положить информацию об ошибке
       this.setState({
         data: {},
-        waiting: false
+        waiting: false,
+        error: e
       });
     }
   }

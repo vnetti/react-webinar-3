@@ -16,13 +16,13 @@ function reducer(state = initialState, action) {
       return { ...state, list: action.payload.data.list, count: action.payload.data.count, waiting: false};
 
     case "comments/load-error":
-      return { ...state, list: [], count: 0, waiting: false}; //@todo текст ошибки сохранить
+      return { ...state, list: [], count: 0, waiting: false, error: action.payload.error};
 
     case "comments/new":
       return { ...action.state, list: [...action.state.list, action.payload.data], count: action.state.count + 1};
 
     case "comments/new-error":
-      return { ...action.state, error: action.payload.error}; //@todo текст ошибки сохранить
+      return { ...action.state, error: action.payload.error};
 
     default:
       // Нет изменений

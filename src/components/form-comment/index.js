@@ -11,10 +11,10 @@ function FormComment(props) {
   return (
     <form className={cn({reply: props.isReply})} onSubmit={props.onSubmit}>
       <span className={cn('title')}>{props.title}</span>
-      <TextArea value={props.commentText} onChange={props.onChange} type='text-area' theme='full'/>
+      <TextArea autoFocus={props.autoFocus} value={props.commentText} onChange={props.onChange} type='text-area' theme='full'/>
       <div className={cn('actions')}>
-        <button type='submit'>Отправить</button>
-        {props.onClose && <button onClick={props.onClose}>Отмена</button>}
+        <button type='submit'>{props.t('comments.submit')}</button>
+        {props.onClose && <button onClick={props.onClose}>{props.t('comments.cancel')}</button>}
       </div>
     </form>
   )
@@ -27,11 +27,15 @@ FormComment.propTypes = {
   isReply: PropTypes.bool,
   commentText: PropTypes.string,
   onChange: PropTypes.func,
+  t: PropTypes.func,
+  autoFocus: PropTypes.bool
 }
 
 FormComment.defaultProps = {
   onSubmit: () => {},
-  isReply: false
+  isReply: false,
+  t: text => text,
+  autoFocus: false
 }
 
 export default memo(FormComment);

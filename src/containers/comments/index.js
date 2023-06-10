@@ -42,19 +42,24 @@ function Comments() {
     comments: useMemo(() => listToTree(select.comments, item => item.parent._type === 'comment', item => ({
       _id: item._id,
       _type: item._type,
-      text: item.isDeleted ? 'Комментарий удален -_-' : item.text,
+      text: item.isDeleted ? `${t('comments.textIsDeleted')} -_-` : item.text,
       authorName: item.author.profile.name,
-      dateCreate: format(new Date(item.dateCreate), `dd MMMM yyyy в ${lang === 'ru' ? 'HH:mm' : 'hh:mm bbbb'}`, {locale: lang === 'ru' ? ru : enUS}),
-      isDeleted: item.isDeleted
+      dateCreate: format(new Date(item.dateCreate), `dd MMMM yyyy ${lang === 'ru' ? 'в HH:mm' : '\'at\' hh:mm bbbb'}`, {locale: lang === 'ru' ? ru : enUS}),
+      isDeleted: item.isDeleted,
+      isSelf: item.author.profile.name === userName,
     })), [select.comments, lang])
   }
 
   const callbacks = {
-    onReply: useCallback((_id, _type) => setComment({_id, _type}), []),
+    onReply: useCallback((_id, _type, ref) => {
+      setComment({_id, _type})
+      console.log(ref.current)
+    }, []),
     onChange: useCallback((value) => setCommentText(value), []),
     onSubmit: useCallback((e) => {
       e.preventDefault()
       dispatch(commentsActions.submit(commentText, comment._id, comment._type))
+      setCommentText('')
     }, [commentText]),
     onClose: useCallback(() => setComment({_id: params.id, _type: 'article'}), [])
   }
@@ -62,18 +67,20 @@ function Comments() {
   return (
     <Spinner active={select.waiting}>
       <SideLayout paddingX={'big'}>
-        <h3>Комментарии ({select.count})</h3>
+        <h3>{t('comments.heading')} ({select.count})</h3>
       </SideLayout>
       <ListComments currentCommentToReply={comment}
                     list={data.comments}
-
+                    t={t}
+                    lang={lang}
+                    commentText={commentText}
                     onClose={callbacks.onClose}
                     onChange={callbacks.onChange}
                     onSubmit={callbacks.onSubmit}
                     onReply={callbacks.onReply}/>
 
-      {comment._id === params.id && <ProtectedPart element={<SignInTo paddingX={'very-big'} ability={'комментировать'} paddingY={'medium'}/>}>
-        <FormComment onSubmit={callbacks.onSubmit} onChange={callbacks.onChange} title={'Новый комментарий'}/>
+      {comment._id === params.id && <ProtectedPart element={<SignInTo t={t} paddingX={'very-big'} ability={t("comments.toComment")} paddingY={'medium'}/>}>
+        <FormComment t={t} commentText={commentText} onSubmit={callbacks.onSubmit} onChange={callbacks.onChange} title={t("comments.newComment")}/>
       </ProtectedPart>}
     </Spinner>
   );

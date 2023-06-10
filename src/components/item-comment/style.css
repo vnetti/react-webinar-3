@@ -17,6 +17,10 @@
     font-weight: 700;
 }
 
+.ItemComment-authorName_self {
+    color: #666666;
+}
+
 .ItemComment-text {
     font-size: 14px;
     overflow-wrap: break-word;

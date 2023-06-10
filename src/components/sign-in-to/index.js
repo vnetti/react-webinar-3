@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import {memo} from "react";
 import './style.css'
 
-function SignInTo({ability, paddingY, paddingX}) {
+function SignInTo({ability, paddingY, paddingX, t}) {
 
   const cn = bem('SingInTo')
 
   return (
     <div className={cn({paddingY, paddingX})}>
       <p>
-        <Link to={'/login'} state={{ back: location.pathname }} >Войдите</Link>, чтобы иметь возможность {ability}
+        <Link to={'/login'} state={{ back: location.pathname }} >{t('comments.singIn')}</Link>, {t('comments.toBeAble')} {ability}
       </p>
     </div>
   )

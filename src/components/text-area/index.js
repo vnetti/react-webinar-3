@@ -33,6 +33,7 @@ function TextArea(props) {
       value={value}
       placeholder={props.placeholder}
       onChange={onChange}
+      autoFocus={props.autoFocus}
     />
   )
 }
@@ -43,13 +44,15 @@ TextArea.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   theme: PropTypes.string,
-  resize: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['vertical', 'horizontal'])])
+  resize: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['vertical', 'horizontal'])]),
+  autoFocus: PropTypes.bool
 }
 
 TextArea.defaultProps = {
   onChange: () => {},
   theme: '',
-  resize: false
+  resize: false,
+  autoFocus: false
 }
 
 export default memo(TextArea);

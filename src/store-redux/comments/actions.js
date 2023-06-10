@@ -18,7 +18,7 @@ export default {
         dispatch({type: 'comments/load-success', payload: {data: {list: res.data.result.items, count: res.data.result.count}}});
       } catch (e) {
         //Ошибка загрузки
-        dispatch({type: 'comments/load-error'});
+        dispatch({type: 'comments/load-error', payload: {error: e}});
       }
     }
   },
