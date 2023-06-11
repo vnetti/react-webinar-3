@@ -9,7 +9,6 @@ class I18nService {
   constructor(services, config = {}) {
     this._services = services;
     this._config = config;
-    this._lang = this._config.language
     this.listeners = []
   }
 
@@ -26,10 +25,17 @@ class I18nService {
   }
 
   /**
-   *
    * @returns {String} Текущая локаль
    */
   get lang() {
+    if (!this._lang) {
+      // Устанавливаем локаль если ее еще нет. Выбранный юзером язык, либо язык пользовательского агента, либо дефолт язык из config.js
+      this.lang = window.localStorage.getItem('lang')
+        || window.navigator?.language
+          .substring(0, window.navigator.language.search('-'))
+          .toLowerCase()
+        || this._config.defaultLanguage
+    }
     return this._lang
   }
 
@@ -40,24 +46,35 @@ class I18nService {
   set lang(lang) {
     if (lang !== this._lang) {
       this._lang = lang
+      // Вызываем слушатели
       for (const listener of this.listeners) listener()
     }
+
+    // Запоминаем выбранную локаль, чтобы локаль не сбрасывалась при новой сессии
+    window.localStorage.setItem('lang', this.lang)
+
+    // Устанавливаем локаль в АПИ
+    this._services.api.setHeader(this._config.tokenHeader, this.lang);
   }
 
   /**
    * Перевод фразу по словарю
-   * @param lang {String} Код языка
    * @param text {String} Текст для перевода
-   * @param [plural] {Number} Число для плюрализации
+   * @param [option] {Object} Опции перевода
+   * @param [option.lang] {String} Код языка
+   * @param [option.plural] {Number} Число для плюрализации
    * @returns {String} Переведенный текст
    */
-  translate(text, {lang, plural}) {
+  translate(text, option) {
+    let lang = this.lang
+    if (typeof option?.lang !== "undefined") lang = option.lang
+
     let result = translations[lang] && (text in translations[lang])
       ? translations[lang][text]
       : text;
 
-    if (typeof plural !== 'undefined'){
-      const key = new Intl.PluralRules(lang).select(plural);
+    if (typeof option?.plural !== 'undefined'){
+      const key = new Intl.PluralRules(lang).select(option.plural);
       if (key in result) {
         result = result[key];
       }

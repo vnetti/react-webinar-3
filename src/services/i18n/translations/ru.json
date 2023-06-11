@@ -16,6 +16,10 @@
     "other": "товара"
   },
   "article.add": "Добавить",
+  "article.madeIn": "Страна производитель",
+  "article.category": "Категория",
+  "article.year": "Год выпуска",
+  "article.price": "Цена",
   "filter.reset": "Сбросить",
   "auth.title": "Вход",
   "auth.login": "Логин",

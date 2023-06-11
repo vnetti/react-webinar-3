@@ -10,7 +10,7 @@ const config = {
     // Настройки модулей состояния
     modules: {
       session: {
-        // Названия токена в АПИ
+        // Названия токена авторизации в АПИ
         tokenHeader: 'X-Token'
       }
     }
@@ -19,9 +19,9 @@ const config = {
     baseUrl: ''
   },
   i18n: {
-    language: window.navigator?.language
-        .substring(0, window.navigator.language.search('-'))
-        .toLowerCase() || 'ru'
+    defaultLanguage: 'ru',
+    // Названия токена локали в АПИ
+    tokenHeader: 'X-Lang'
   }
 }
 
