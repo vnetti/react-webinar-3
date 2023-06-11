@@ -65,6 +65,7 @@ class Store {
   /**
    * Установка состояния
    * @param newState {Object}
+   * @param description - Описание для логирования изменения стейта
    */
   setState(newState, description = 'setState') {
     if (this.config.log) {
