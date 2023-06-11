@@ -17,6 +17,11 @@ const config = {
   },
   api: {
     baseUrl: ''
+  },
+  i18n: {
+    language: window.navigator?.language
+        .substring(0, window.navigator.language.search('-'))
+        .toLowerCase() || 'ru'
   }
 }
 
