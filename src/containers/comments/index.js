@@ -21,9 +21,8 @@ function Comments() {
   const dispatch = useDispatch();
 
   const params = useParams();
-  useInit(() => {
-    dispatch(commentsActions.load(params.id));
-  }, [params.id]);
+
+  const {lang, t} = useTranslate();
 
   const select = useSelectorRedux(state => ({
     comments: state.comments.list,
@@ -32,8 +31,6 @@ function Comments() {
   }), shallowequal)
 
   const userName = useSelector(state => state.session.user.profile?.name)
-
-  const {lang, t} = useTranslate();
 
   const [comment, setComment] = useState({_id: params.id, _type: 'article'})
   const [commentText, setCommentText] = useState('')

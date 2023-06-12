@@ -14,21 +14,25 @@ import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import shallowequal from "shallowequal";
 import articleActions from '../../store-redux/article/actions';
 import Comments from "../../containers/comments";
+import commentsActions from "../../store-redux/comments/actions";
+
 
 function Article() {
   const store = useStore();
   const dispatch = useDispatch();
   // Параметры из пути /articles/:id
   const params = useParams();
-  useInit(() => {
-    //store.actions.article.load(params.id);
-    dispatch(articleActions.load(params.id));
-  }, [params.id]);
+  const {lang, t} = useTranslate();
+  useInit(async () => {
+    await Promise.all([
+      dispatch(articleActions.load(params.id)),
+      dispatch(commentsActions.load(params.id))
+    ])
+  }, [params.id, lang]);
   const select = useSelectorRedux(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
-  const {t} = useTranslate();
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),

@@ -35,5 +35,8 @@
   "comments.toReply": "to reply",
   "comments.cancel": "Cancel",
   "comments.newComment": "New comment",
-  "comments.newReply": "New reply"
+  "comments.newReply": "New reply",
+  "profile.title": "Profile",
+  "profile.name": "Name",
+  "profile.phone": "Phone"
 }

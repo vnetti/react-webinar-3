@@ -37,5 +37,8 @@
   "comments.toReply": "ответить",
   "comments.cancel": "Отмена",
   "comments.newComment": "Новый комментарий",
-  "comments.newReply": "Новый ответ"
+  "comments.newReply": "Новый ответ",
+  "profile.title": "Профиль",
+  "profile.name": "Имя",
+  "profile.phone": "Телефон"
 }
